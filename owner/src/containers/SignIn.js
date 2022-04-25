@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -20,10 +22,20 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
+    const registered = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    
+    axios.post('http://localhost:4000/app/signin',registered)
+    .then(response => {console.log(response.data)
+    if(response.data){
+     alert("logged in")
+    }
+    else
+      alert("Not logged IN")
+  })
+  
   };
 
   return (
